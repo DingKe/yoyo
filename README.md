@@ -6,7 +6,6 @@ A python based barebone framework for Voice Assistant.
 * Mic: Playstation Eye (USB)
 * Speaker: Dual speaker with external power (AV)
 
-
 ## 1. Audio I/O
 Audio I/O using [PortAudio](http://www.portaudio.com/) (python wrapper [pyaudio](http://people.csail.mit.edu/hubert/pyaudio/)).
 
@@ -16,8 +15,10 @@ Streaming ASR engine from [Tencent AI Lab](https://ai.qq.com/product/aaiasr.shtm
 ## 3. TTS
 TTS engine from [Tencent AI Lab](http://ai.qq.com/doc/aaitts.shtml).
 
+## 4. Wakeup
+Keyword Detector via [snowboy](https://github.com/Kitt-AI/snowboy).
+
 ## Undergoing
-* Wakeup
 * VAD
 * DM
 
