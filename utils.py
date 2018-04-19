@@ -36,3 +36,8 @@ def http_post(api_url, args):
     resp = requests.post(url=api_url, data=args)
     resp = json.loads(resp.text)
     return resp
+
+
+def cmd_exists(cmd):
+    return subprocess.call('type ' + cmd, shell=True,
+                           stdin=subprocess.PIPE, stdout=subprocess.PIPE) == 0
