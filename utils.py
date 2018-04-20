@@ -10,6 +10,8 @@ import hashlib
 import json
 import subprocess
 import time
+from contextlib import contextmanager
+from ctypes import *
 
 
 def md5(string):
@@ -41,3 +43,26 @@ def http_post(api_url, args):
 def cmd_exists(cmd):
     return subprocess.call('type ' + cmd, shell=True,
                            stdin=subprocess.PIPE, stdout=subprocess.PIPE) == 0
+
+
+def py_error_handler(*args):
+    pass
+
+
+ERROR_HANDLER_FUNC = CFUNCTYPE(None, c_char_p,
+                               c_int, c_char_p,
+                               c_int, c_char_p)
+
+c_error_handler = ERROR_HANDLER_FUNC(py_error_handler)
+
+
+@contextmanager
+def no_alsa_error():
+    try:
+        asound = cdll.LoadLibrary('libasound.so')
+        asound.snd_lib_error_set_handler(c_error_handler)
+        yield
+        asound.snd_lib_error_set_handler(None)
+    except:
+        yield
+        pass

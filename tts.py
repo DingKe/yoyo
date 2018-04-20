@@ -12,6 +12,7 @@ import time
 import random
 import base64
 
+from audio import play
 from utils import *
 
 
@@ -88,16 +89,19 @@ class BasicTTS(BaseTTS):
 
         return file_name
 
+    def say(self, text, **kwargs):
+        speech_file = self.tts(text, **kwargs)
+        play(speech_file)
+
 
 def test_tts():
-    from audio import play
-
     texts = ['早上好!', '即将为您播放周杰伦的《简单爱》。', '早上好!',
              '北京今天晴转多云，微风，空气质量优']
     tts_engine = BasicTTS()
     for text in texts:
         speech_file = tts_engine.tts(text, ext='wav', speaker=6, volume=10)
         play(speech_file)
+        tts_engine.say(text, ext='wav', speaker=6, volume=10)
 
 
 if __name__ == '__main__':

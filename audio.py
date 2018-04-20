@@ -12,7 +12,7 @@ import threading
 import subprocess
 
 import pyaudio
-from utils import cmd_exists
+from utils import cmd_exists, no_alsa_error
 
 
 def play(speech_file, volume=1.):
@@ -23,7 +23,8 @@ def play(speech_file, volume=1.):
         p.wait()
     else:
         wf = wave.open(audio_file, 'rb')
-        pa = pyaudio.PyAudio()
+        with no_alsa_error():
+            pa = pyaudio.PyAudio()
         stream = pa.open(format=pa.get_format_from_width(wf.getsampwidth()),
                          channels=wf.getnchannels(),
                          rate=wf.getframerate(),
@@ -80,7 +81,8 @@ class AudioStream(object):
             self._buf.extend(data)
 
     def record_proc(self):
-        pa = pyaudio.PyAudio()
+        with no_alsa_error():
+            pa = pyaudio.PyAudio()
         stream = pa.open(format=pyaudio.paInt16,
                          channels=1,
                          rate=self.rate,

@@ -18,8 +18,10 @@ TTS engine from [Tencent AI Lab](http://ai.qq.com/doc/aaitts.shtml).
 ## 4. Wakeup
 Keyword Detector via [snowboy](https://github.com/Kitt-AI/snowboy).
 
+## 5. VAD
+Voice Activity Detection using [webrtc's VAD](https://chromium.googlesource.com/external/webrtc/stable/webrtc/+/master/common_audio/vad).
+
 ## Undergoing
-* VAD
 * DM
 
 ## TODO
