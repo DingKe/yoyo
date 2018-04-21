@@ -10,6 +10,7 @@ import time
 import wave
 import random
 import base64
+import threading
 
 from utils import *
 
@@ -113,6 +114,11 @@ class BasicStreamASR(BaseASR):
 
         return resp
 
+    def post_one_packet_async(self, *args, **kwargs):
+        thread = threading.Thread(target=self.post_one_packet, args=args, kwargs=kwargs)
+        thread.daemon = True
+        thread.start()
+        return thread
 
 def test_basic_asr():
     audio_files = ['wav/chinense_utterance.wav']

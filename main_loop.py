@@ -44,17 +44,18 @@ if __name__ == '__main__':
     with no_alsa_error():
         pa = pyaudio.PyAudio()
 
+    # set up wakeup
+    models = ['snowboy/resources/models/snowboy.umdl',
+              'snowboy/resources/models/alexa_02092017.umdl']
+    keyword_detector = Snowboy(models, 0.5)
+
     tts_engine.say("你好", speaker=6)
     while True:
-        # set up wakeup
-        models = ['snowboy/resources/models/snowboy.umdl',
-                  'snowboy/resources/models/alexa_02092017.umdl']
-        keyword_detector = Snowboy(models, 0.5)
         keyword_detector.start_detect(callback=wakeup_alert)
 
         # speech streaming
         rate = 16000
-        chunk_duration = 20  # in ms
+        chunk_duration = 30  # in ms
         chunk = rate // 1000 * chunk_duration
         stream = pa.open(format=pyaudio.paInt16, channels=1, rate=rate,
                          input=True, frames_per_buffer=chunk)

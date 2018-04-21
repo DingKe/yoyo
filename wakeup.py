@@ -45,12 +45,12 @@ class Snowboy(Wakeup):
         self.detector.SetSensitivity(sensitivity_str.encode())
         self.detector.SetAudioGain(audio_gain)
 
-        self.stream = AudioStream(chunk=16 * 100, buffer_bytes=16000 * 2)
-        self.stream.start()
-
     def start_detect(self, sleep_time=0.05, callback=None):
+        stream = AudioStream(chunk=16 * 100, buffer_bytes=16000 * 2)
+        stream.start()
+
         while True:
-            data = self.stream.get()
+            data = stream.get()
 
             if len(data) == 0:
                 time.sleep(sleep_time)
@@ -62,7 +62,7 @@ class Snowboy(Wakeup):
             else:
                 break
 
-        self.stream.stop()
+        stream.stop()
 
         if callback:
             callback(ans)
